@@ -1,0 +1,420 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: WPS Limit Login\n"
+"POT-Creation-Date: 2018-03-05 14:30+0100\n"
+"PO-Revision-Date: 2018-03-05 14:29+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.12\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: wps-limit-login.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin_page/options.php:4
+msgid ""
+"WPS Limit Login limits attempts to connect to your WordPress administration."
+msgstr ""
+
+#: blocks/blacklist.php:7 blocks/menu.php:39
+msgid "Blacklist"
+msgstr ""
+
+#: blocks/blacklist.php:8
+msgid ""
+"Defines a list of IP addresses for which you want to completely block access "
+"to the login page."
+msgstr ""
+
+#: blocks/blacklist.php:9 blocks/whitelist.php:18
+msgid "One IP range (88.88.88.86/90) or IP(88.88.88.86) per line"
+msgstr ""
+
+#: blocks/blacklist.php:11
+msgid "which will block all ip between 88.88.88.86 and 88.88.88.90"
+msgstr ""
+
+#: blocks/blacklist.php:14 blocks/settings.php:79 blocks/whitelist.php:23
+msgid "Save"
+msgstr ""
+
+#: blocks/log.php:6
+msgid "Statistics"
+msgstr ""
+
+#: blocks/log.php:12
+#, php-format
+msgid "%d lockout since last reset"
+msgid_plural "%d lockouts since last reset"
+msgstr[0] ""
+msgstr[1] ""
+
+#: blocks/log.php:16 blocks/log.php:43 classes/plugin.php:1409
+msgid "No lockouts yet"
+msgstr ""
+
+#: blocks/log.php:20
+#, php-format
+msgid "%d IP is currently blocked from trying to log in"
+msgid_plural "%d IPs is currently blocked from trying to log in"
+msgstr[0] ""
+msgstr[1] ""
+
+#: blocks/log.php:25
+msgid "Reset Counter"
+msgstr ""
+
+#: blocks/log.php:29
+msgid "Restore Lockouts"
+msgstr ""
+
+#: blocks/log.php:39
+msgid "Lockout log"
+msgstr ""
+
+#: blocks/log.php:41
+msgid ""
+"You can unlock an IP address individually (by clicking on \"Unlock\" red "
+"button)."
+msgstr ""
+
+#: blocks/log.php:52
+msgid "Clear Log"
+msgstr ""
+
+#: blocks/log.php:59 blocks/log.php:68
+msgid "Date"
+msgstr ""
+
+#: blocks/log.php:60 blocks/log.php:69
+msgctxt "Internet address"
+msgid "IP"
+msgstr ""
+
+#: blocks/log.php:61 blocks/log.php:70
+msgid "Users"
+msgstr ""
+
+#: blocks/log.php:62 blocks/log.php:71
+msgid "Gateway"
+msgstr ""
+
+#: blocks/log.php:70 classes/plugin.php:1421
+msgid "lockout"
+msgid_plural "lockouts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: blocks/log.php:75
+msgid "Unlock"
+msgstr ""
+
+#: blocks/log.php:77 blocks/log.php:103
+msgid "Unlocked"
+msgstr ""
+
+#: blocks/menu.php:13 blocks/settings.php:10
+msgid "Configuration"
+msgstr ""
+
+#: blocks/menu.php:26 blocks/whitelist.php:15
+msgid "Whitelist"
+msgstr ""
+
+#: blocks/menu.php:52
+msgid "Log"
+msgstr ""
+
+#: blocks/pub-wps-hide-login.php:13
+msgid "Install WPS Hide Login"
+msgstr ""
+
+#: blocks/pub-wps-hide-login.php:25
+msgid "Enable WPS Hide login"
+msgstr ""
+
+#: blocks/pub-wps-hide-login.php:45
+msgid "Secure access to your WordPress administration"
+msgstr ""
+
+#: blocks/pub-wps-hide-login.php:49
+msgid "More about WPS Hide Login"
+msgstr ""
+
+#: blocks/pub-wpsbidouille.php:13
+msgid "Install WPS Bidouille"
+msgstr ""
+
+#: blocks/pub-wpsbidouille.php:25
+msgid "Enable WPS Bidouille"
+msgstr ""
+
+#: blocks/pub-wpsbidouille.php:44
+msgid ""
+"WPS Bidouille provides information about your WordPress and contains "
+"optimization tools."
+msgstr ""
+
+#: blocks/pub-wpsbidouille.php:48
+msgid "More about WPS Bidouille"
+msgstr ""
+
+#: blocks/pub-wpserveur.php:19
+msgid "Install Migrate Guru"
+msgstr ""
+
+#: blocks/pub-wpserveur.php:31
+msgid "Enable Migrate Guru"
+msgstr ""
+
+#: blocks/pub-wpserveur.php:56
+msgid "Discover the specialized WordPress hosting with WPServeur!"
+msgstr ""
+
+#: blocks/pub-wpserveur.php:57
+msgid "For fast, secure and efficient hosting."
+msgstr ""
+
+#: blocks/pub-wpserveur.php:58
+msgid "We only do WordPress but we do it well!"
+msgstr ""
+
+#: blocks/pub-wpserveur.php:59
+#, php-format
+msgid ""
+"(-10% discount on your subscription with the promo code <strong>WPSC&T</"
+"strong>)"
+msgstr ""
+
+#: blocks/pub-wpserveur.php:63
+msgid "Subscribe to WPServeur"
+msgstr ""
+
+#: blocks/pub-wpserveur.php:67
+msgid "More about Migrate guru"
+msgstr ""
+
+#: blocks/settings.php:17
+msgid "Let network sites use their own settings"
+msgstr ""
+
+#: blocks/settings.php:18
+msgid ""
+"If disabled, the global settings will be forcibly applied to the entire "
+"network."
+msgstr ""
+
+#: blocks/settings.php:22
+msgid "Use global settings"
+msgstr ""
+
+#: blocks/settings.php:43
+msgid "allowed retries"
+msgstr ""
+
+#: blocks/settings.php:43
+msgid "for a period of"
+msgstr ""
+
+#: blocks/settings.php:45
+msgid "minutes"
+msgstr ""
+
+#: blocks/settings.php:49
+msgid "hours until retries are reset"
+msgstr ""
+
+#: blocks/settings.php:53
+msgid "lockouts increase lockout time to"
+msgstr ""
+
+#: blocks/settings.php:55
+msgid "hours"
+msgstr ""
+
+#: blocks/settings.php:60
+msgid "Email to admin after"
+msgstr ""
+
+#: blocks/settings.php:62
+msgid "lockouts"
+msgstr ""
+
+#: blocks/settings.php:65
+msgid "Show Credit Link?"
+msgstr ""
+
+#: blocks/settings.php:66
+msgid ""
+"By default, WPS Limit Login will display the following message on the login "
+"form:"
+msgstr ""
+
+#: blocks/settings.php:68 classes/plugin.php:1250
+msgid "Login form protected by"
+msgstr ""
+
+#: blocks/settings.php:71
+msgid ""
+"This helps others know about the plugin so they can protect their blogs as "
+"well if they like. However, you can disable this message if you prefer."
+msgstr ""
+
+#: blocks/settings.php:75
+msgid "Show credit link"
+msgstr ""
+
+#: blocks/settings.php:82
+msgid "Reset the original settings"
+msgstr ""
+
+#: blocks/whitelist.php:16
+msgid ""
+"Sets a list of IP addresses that will have no attempt limit and will never "
+"be blocked. Be careful, you must put trusted IP addresses (example: the IP "
+"address of your home), you must never put the IP address of a public network "
+"(Internet cafe or other)."
+msgstr ""
+
+#: blocks/whitelist.php:17
+#, php-format
+msgid "Add your IP address (%s) to a whitelist."
+msgstr ""
+
+#: blocks/whitelist.php:20
+msgid ""
+"which will add all ip between 88.88.88.86 and 88.88.88.90 in the whitelist"
+msgstr ""
+
+#: classes/plugin.php:221 classes/plugin.php:979
+#, php-format
+msgid "<strong>%d</strong> attempt remaining."
+msgid_plural "<strong>%d</strong> attempts remaining."
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/plugin.php:274 classes/plugin.php:764 classes/plugin.php:825
+msgid "<strong>ERROR</strong>: Too many failed login attempts."
+msgstr ""
+
+#: classes/plugin.php:607
+#, php-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/plugin.php:613
+#, php-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/plugin.php:620
+#, php-format
+msgid "[%s - WPS Limit Login] Failed login attempts from whitelisted IP"
+msgstr ""
+
+#: classes/plugin.php:624
+#, php-format
+msgid "[%s - WPS Limit Login] Too many failed login attempts"
+msgstr ""
+
+#: classes/plugin.php:629
+#, php-format
+msgid "%d failed login attempts (%d lockout(s)) from IP: %s"
+msgstr ""
+
+#: classes/plugin.php:633
+#, php-format
+msgid "Last user attempted: %s"
+msgstr ""
+
+#: classes/plugin.php:637
+msgid "IP was NOT blocked because of external whitelist."
+msgstr ""
+
+#: classes/plugin.php:639
+#, php-format
+msgid "IP was blocked for %s"
+msgstr ""
+
+#: classes/plugin.php:829
+msgid "Please try again later."
+msgstr ""
+
+#: classes/plugin.php:837
+#, php-format
+msgid "Please try again in %d hour."
+msgid_plural "Please try again in %d hours."
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/plugin.php:839
+#, php-format
+msgid "Please try again in %d minute."
+msgid_plural "Please try again in %d minutes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/plugin.php:907
+msgid "<strong>ERROR</strong>: Incorrect username or password."
+msgstr ""
+
+#: classes/plugin.php:930
+msgid "WC Error"
+msgstr ""
+
+#: classes/plugin.php:1082
+msgid "Cleared IP log"
+msgstr ""
+
+#: classes/plugin.php:1088
+msgid "Reset lockout count"
+msgstr ""
+
+#: classes/plugin.php:1094
+msgid "Cleared current lockouts"
+msgstr ""
+
+#: classes/plugin.php:1117 classes/plugin.php:1135 classes/plugin.php:1153
+msgid "Options saved."
+msgstr ""
+
+#: classes/plugin.php:1396 classes/plugin.php:1398
+msgid "Settings"
+msgstr ""
+
+#: classes/plugin.php:1412
+msgid "List of the last 5 lockouts:"
+msgstr ""
+
+#: classes/plugin.php:1428
+msgid "See all lockouts"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WPS Limit Login"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Limit connection attempts by IP address"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "WPServeur, NicolasKulka, benoitgeek"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://wpserveur.net"
+msgstr ""
