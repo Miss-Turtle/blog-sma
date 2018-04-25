@@ -17,22 +17,35 @@
  * @package WordPress
  */
 
-// ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
-/** Nom de la base de données de WordPress. */
-//define('DB_NAME', 'sandrine.martinez.10');
-define('DB_NAME', 'sandrine_martinez_10');
+// ** Get the server connexions if local or not */
+require_once(ABSPATH . 'info.php');
+if($_SERVER["SERVER_ADDR"] == "127.0.0.1"){
+  // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
+  /** Nom de la base de données de WordPress. */
+  define('DB_NAME', 'sandrine_martinez_10');
 
-/** Utilisateur de la base de données MySQL. */
-//define('DB_USER', 'sandrine.martinez.10');
-define('DB_USER', 'root');
+  /** Utilisateur de la base de données MySQL. */
+  define('DB_USER', 'root');
 
-/** Mot de passe de la base de données MySQL. */
-//define('DB_PASSWORD', 'fwafv7jb');
-define('DB_PASSWORD', '');
+  /** Mot de passe de la base de données MySQL. */
+  define('DB_PASSWORD', '');
 
-/** Adresse de l’hébergement MySQL. */
-//define('DB_HOST', 'sql.free.fr');
-define('DB_HOST', 'localhost');
+  /** Adresse de l’hébergement MySQL. */
+  define('DB_HOST', 'localhost');
+} else {
+  // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
+  /** Nom de la base de données de WordPress. */
+  define('DB_NAME', 'sandrine.martinez.10');
+
+  /** Utilisateur de la base de données MySQL. */
+  define('DB_USER', 'sandrine.martinez.10');
+
+  /** Mot de passe de la base de données MySQL. */
+  define('DB_PASSWORD', 'fwafv7jb');
+
+  /** Adresse de l’hébergement MySQL. */
+  define('DB_HOST', 'sql.free.fr');
+}
 
 /** Jeu de caractères à utiliser par la base de données lors de la création des tables. */
 define('DB_CHARSET', 'utf8');
