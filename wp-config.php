@@ -32,7 +32,8 @@ if($_SERVER["SERVER_ADDR"] == "127.0.0.1"){
 
   /** Adresse de l’hébergement MySQL. */
   define('DB_HOST', 'localhost');
-} else {
+}
+else {
   // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
   /** Nom de la base de données de WordPress. */
   define('DB_NAME', 'sandrine.martinez.10');

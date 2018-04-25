@@ -1,9 +1,3 @@
 <IfDefine Free>
 php56 1
 </IfDefine>
-
-<FilesMatch ^wp-config.php$>
-    deny from all
-</FilesMatch>
-
-Options All -Indexes
