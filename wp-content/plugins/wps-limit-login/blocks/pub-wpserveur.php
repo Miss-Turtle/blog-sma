@@ -1,12 +1,16 @@
 <?php
 
-$pf = WPS_LIMIT_LOGIN::wps_ip_check_return_pf();
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
+
+$pf = \WPS\WPS_Limit_Login\Pub::wps_ip_check_return_pf();
 if ( ! empty( $pf ) ) {
 	return false;
 }
 
 $plugin              = 'migrate-guru/migrateguru.php';
-$is_plugin_installed = WPS_LIMIT_LOGIN::is_plugin_installed( $plugin );
+$is_plugin_installed = \WPS\WPS_Limit_Login\Pub::is_plugin_installed( $plugin );
 if ( ! $is_plugin_installed ) {
 	$classes    = 'install-now';
 	$action_url = wp_nonce_url( add_query_arg(
@@ -64,6 +68,6 @@ $details_url = add_query_arg(
         <a data-slug="migrate-guru" href="<?php echo $action_url; ?>"
            class="btn-pubwps btn-install-plugin <?php echo $classes; ?>"><?php echo $button; ?></a>
         <a href="<?php echo $details_url; ?>"
-           class="thickbox open-plugin-details-modal btn-wps-details"><?php _e( 'More about Migrate guru', 'wps-limit-login' ); ?></a>
+           class="thickbox open-plugin-details-modal btn-wps-details"><?php echo sprintf( __( 'More about %s', 'wps-limit-login' ), 'Migrate Guru' ); ?></a>
     </div>
 </div>

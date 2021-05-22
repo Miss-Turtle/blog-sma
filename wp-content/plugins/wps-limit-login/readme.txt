@@ -1,10 +1,10 @@
 === WPS Limit Login ===
-Contributors: WPServeur, NicolasKulka, benoitgeek
-Donate link: #
-Tags: login, limit login, security, authentication, WPS Limit Login, wps-limit-login, Limit Login Attempts, Limit Login Attempts Reloaded, Limit Login Attempts Revamped, Limit Login Attempts Renovated, Limit Login Attempts Updated, Better Limit Login Attempts, Limit Login Attempts Renewed, Limit Login Attempts Upgraded, limit
-Requires at least: 3.3
-Tested up to: 4.9
-Stable tag: 1.2
+Contributors: WPServeur, NicolasKulka, wpformation
+Donate link: https://www.paypal.me/donateWPServeur
+Tags: login, limit login, security, authentication, WPS Limit Login, wps-limit-login, Limit Login Attempts, Limit Login Attempts Reloaded, Limit Login Attempts Revamped, Limit Login Attempts Renovated, Limit Login Attempts Updated, Better Limit Login Attempts, Limit Login Attempts Renewed, Limit Login Attempts Upgraded, limit, wpserveur
+Requires at least: 4.2
+Tested up to: 5.7
+Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,11 +31,14 @@ Caractéristiques:
 * **Woocommerce** protection de la page de connexion.
 * **Compatibilité multi-sites** avec des paramètres MU supplémentaires.
 
+Pour en savoir plus lisez l'article suivant : <a href="https://wpformation.com/wps-limit-login/" target="_blank">https://wpformation.com/wps-limit-login</a>
+
 Ce plugin vous est gentiment proposé par <a href="https://www.wpserveur.net/?refwps=14&campaign=wpslimitlogin">WPServeur</a> l'hébergeur spécialisé WordPress.
 
 Découvrez également nos autres extensions gratuites :
 - <a href="https://fr.wordpress.org/plugins/wps-hide-login/">WPS Hide Login</a> pour changer votre URL de connexion en ce que vous voulez.
 - <a href="https://fr.wordpress.org/plugins/wps-bidouille/">WPS Bidouille</a> pour optimiser votre WordPress et faire le plein d'infos.
+- <a href="https://fr.wordpress.org/plugins/wps-cleaner/">WPS Cleaner</a> pour nettoyer votre site WordPress.
 
 Ce plugin est seulement maintenu, ce qui signifie que nous ne garantissons pas un support gratuit. Envisagez de signaler un problème et soyez patient.
 
@@ -58,11 +61,14 @@ Features:
 * **Woocommerce** login page protection.
 * **Multi-site** compatibility with extra MU settings.
 
+To learn more read the following article: <a href="https://wpformation.com/wps-limit-login/" target="_blank">https://wpformation.com/wps-limit-login</a>
+
 This plugin is kindly proposed by <a href="https://www.wpserveur.net/?refwps=14&campaign=wpslimitlogin">WPServeur</a> the specialized WordPress web host.
 
 Découvrez également nos autres extensions gratuites :
 - <a href="https://wordpress.org/plugins/wps-hide-login/">WPS Hide Login</a> to change your login URL to whatever you want.
 - <a href="https://wordpress.org/plugins/wps-bidouille/">WPS Bidouille</a> to optimize your WordPress and get more info.
+- <a href="https://wordpress.org/plugins/wps-cleaner/" target="_blank">WPS Cleaner</a> to clean your WordPress site.
 
 This plugin is only maintained, which means we do not guarantee free support. Consider reporting a problem and be patient.
 
@@ -91,6 +97,58 @@ This plugin is only maintained, which means we do not guarantee free support. Co
 5. WP Login
 
 == Changelog ==
+
+= 1.5.3 =
+* Tested up to 5.7
+
+= 1.5.2 =
+* Fix : remove WP_Review
+
+= 1.5.1 =
+* Fix fatal error with vendor wp-dismissible-notices-handler and wp-review-me
+
+= 1.5 =
+* Tested up to 5.6
+* Add compatibility with PHP8
+
+= 1.4.9 =
+* Fix : range_ip
+* Add : button for add your ip in whitelist
+
+= 1.4.8 =
+* Fix : save option "wps_limit_lockout_notify"
+
+= 1.4.7 =
+* Tested up to 5.4
+
+= 1.4.6.1 =
+* Fix : Security vulnerabilities
+
+= 1.4.6 =
+* Fix : Security vulnerabilities (Thanks @juliobox)
+
+= 1.4.5 =
+* Fix : "Fatal error: Uncaught Error: Class 'WPS\WPS_Limit_Login\IXR_Error' not found"
+
+= 1.4.4 =
+* Fix : "Fatal error: Uncaught Error: Class ‘WPS\WPS_Limit_Login\WP_Error’ not found"
+
+= 1.4.3 =
+* Fix : Fatal error on log
+
+= 1.4.2 =
+* Fix : Error with library for compat WordPress and PHP
+
+= 1.4.1 =
+* Fix : Remove message review if PHP is too old
+
+= 1.4 =
+* Enhancement code with composer, namespace and autoload
+* Fix remove review message
+
+= 1.3 =
+* Update readme
+* Add: review message
 
 = 1.2 =
 * Remove: redirect activate

@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
+
 $wps_limit_lockouts_total = $this->get_option( 'wps_limit_lockouts_total', 0 );
 $lockouts                 = $this->get_option( 'wps_limit_login_lockouts' );
 $lockouts_now             = is_array( $lockouts ) ? count( $lockouts ) : 0; ?>
@@ -9,7 +14,7 @@ $lockouts_now             = is_array( $lockouts ) ? count( $lockouts ) : 0; ?>
     wp_nonce_field( 'wps-limit-login-settings' );
     if ( $wps_limit_lockouts_total > 0 ) : ?>
         <p>
-            <?php echo sprintf( _n( '%d lockout since last reset', '%d lockouts since last reset', $wps_limit_lockouts_total, 'wps-limit-login' ), $wps_limit_lockouts_total ); ?>
+            <?php printf( _n( '%d lockout since last reset', '%d lockouts since last reset', $wps_limit_lockouts_total, 'wps-limit-login' ), $wps_limit_lockouts_total ); ?>
         </p>
         <?php
     else :
@@ -17,22 +22,22 @@ $lockouts_now             = is_array( $lockouts ) ? count( $lockouts ) : 0; ?>
     endif;
     if ( $lockouts_now > 0 ) : ?>
         <p>
-            <?php echo sprintf( _n( '%d IP is currently blocked from trying to log in', '%d IPs is currently blocked from trying to log in', $lockouts_now, 'wps-limit-login' ), $lockouts_now ); ?><br />
+            <?php printf( _n( '%d IP is currently blocked from trying to log in', '%d IP are currently blocked from trying to log in', $lockouts_now, 'wps-limit-login' ), $lockouts_now ); ?><br />
         </p>
         <?php
     endif;
     if ( $wps_limit_lockouts_total > 0 ) : ?>
-        <button class="button btn-wps wps-reinit" name="reset_total" type="submit"><?php echo __( 'Reset Counter', 'wps-limit-login' ) . ' (' . $wps_limit_lockouts_total . ')'; ?></button>
+        <button class="button btn-wps wps-reinit" name="reset_total" type="submit"><?php _e( 'Reset Counter', 'wps-limit-login' ) . ' (' . $wps_limit_lockouts_total . ')'; ?></button>
         <?php
     endif;
     if ( $lockouts_now > 0 ) : ?>
-        <button class="button btn-wps wps-reset-lockouts" name="reset_current" type="submit"><?php echo __( 'Restore Lockouts', 'wps-limit-login' ) . ' (' . $lockouts_now . ')'; ?></button
+        <button class="button btn-wps wps-reset-lockouts" name="reset_current" type="submit"><?php _e( 'Restore Lockouts', 'wps-limit-login' ) . ' (' . $lockouts_now . ')'; ?></button
         <?php
     endif; ?>
 </form>
 <?php
 $log = $this->get_option( 'wps_limit_login_logged' );
-$log = WPS_LIMIT_LOGIN::sorted_log_by_date( $log );
+$log = \WPS\WPS_Limit_Login\Plugin::sorted_log_by_date( $log );
 
 $lockouts = (array) $this->get_option( 'wps_limit_login_lockouts' ); ?>
 <div class="wps-credit">
@@ -65,10 +70,10 @@ $lockouts = (array) $this->get_option( 'wps_limit_login_lockouts' ); ?>
 
             <?php foreach ( $log as $date => $user_info ) : ?>
                 <tr>
-                    <td class="limit-login-date"><span class="display-mobile"><?php echo __( 'Date', 'wps-limit-login' ) . ' : '; ?></span><?php echo date_i18n( 'F d, Y H:i', $date ); ?></td>
-                    <td class="limit-login-ip"><span class="display-mobile"><?php echo _x( 'IP', "Internet address", 'wps-limit-login' ) . ' : '; ?></span><?php echo $user_info['ip']; ?></td>
-                    <td class="limit-login-max"><span class="display-mobile"><?php echo __( 'Users' ) . ' : '; ?></span><?php echo $user_info['username'] . ' (' . $user_info['counter'] . ' ' . _n( 'lockout', 'lockouts', $user_info['counter'], 'wps-limit-login' ) . ')' ?></td>
-                    <td class="limit-login-gateway"><span class="display-mobile"><?php echo __( 'Gateway', 'wps-limit-login' ) . ' : '; ?></span><?php echo $user_info['gateway']; ?></td>
+                    <td class="limit-login-date"><span class="display-mobile"><?php _e( 'Date', 'wps-limit-login' ) . ' : '; ?></span><?php echo date_i18n( 'F d, Y H:i', $date ); ?></td>
+                    <td class="limit-login-ip"><span class="display-mobile"><?php echo _x( 'IP', "Internet address", 'wps-limit-login' ) . ' : '; ?></span><?php echo esc_html( $user_info['ip'] ); ?></td>
+                    <td class="limit-login-max"><span class="display-mobile"><?php _e( 'Users' ) . ' : '; ?></span><?php echo $user_info['username'] . ' (' . $user_info['counter'] . ' ' . _n( 'lockout', 'lockouts', $user_info['counter'], 'wps-limit-login' ) . ')' ?></td>
+                    <td class="limit-login-gateway"><span class="display-mobile"><?php _e( 'Gateway', 'wps-limit-login' ) . ' : '; ?></span><?php echo $user_info['gateway']; ?></td>
                     <?php if ( ! empty( $lockouts[ $user_info['ip'] ] ) && $lockouts[ $user_info['ip'] ] > time() ) : ?>
                         <td class="wps_unlock"><a href="#" class="button wps-limit-login-unlock"
                                                   data-ip="<?php echo esc_attr( $user_info['ip'] ) ?>"

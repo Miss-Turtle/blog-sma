@@ -1,6 +1,15 @@
 <?php
 
-class WPS_LIMIT_LOGIN {
+namespace WPS\WPS_Limit_Login;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
+
+class Plugin {
+
+	use Singleton;
+
 	public $default_options = array(
 		/* Are we behind a proxy? */
 		'wps_limit_login_client_type'        => WPS_LIMIT_LOGIN_REMOTE_ADDR,
@@ -46,7 +55,7 @@ class WPS_LIMIT_LOGIN {
 	 */
 	public $_errors = array();
 
-	public function __construct() {
+	protected function init() {
 
 		if ( is_multisite() ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -114,6 +123,11 @@ class WPS_LIMIT_LOGIN {
 		add_filter( 'plugin_action_links_' . WPS_LIMIT_LOGIN_BASENAME, array( $this, 'plugin_action_links' ) );
 
 		add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widgets' ) );
+
+		add_filter( 'admin_footer_text', array( __CLASS__, 'admin_footer_text' ), 1 );
+		add_filter( 'admin_footer', array( __CLASS__, 'admin_footer' ) );
+		add_action( 'wp_ajax_wpslimitlogin_rated', array( __CLASS__, 'wpslimitlogin_rated' ) );
+		add_filter( 'wps_bidouille_not_display_pub_array', array( __CLASS__, 'wps_bidouille_not_display_pub_array' ) );
 	}
 
 	public function check_xmlrpc_lock() {
@@ -122,7 +136,7 @@ class WPS_LIMIT_LOGIN {
 		}
 
 		if ( $this->is_ip_blacklisted() || ! $this->is_limit_login_ok() ) {
-			header( 'HTTP/1.0 403 Forbidden' );
+			status_header( 403, 'Forbidden' );
 			exit;
 		}
 	}
@@ -155,28 +169,56 @@ class WPS_LIMIT_LOGIN {
 	 */
 	public function ip_in_range( $ip, $list ) {
 		foreach ( $list as $range ) {
-			$range = array_map( 'trim', explode( '-', $range ) );
-			if ( count( $range ) == 1 ) {
-				if ( (string) $ip === (string) $range[0] ) {
-					return true;
+			if ( strpos( $range, '/' ) !== false ) {
+				// $range is in IP/NETMASK format
+				list( $range, $netmask ) = explode( '/', $range, 2 );
+				if ( strpos( $netmask, '.' ) !== false ) {
+					// $netmask is a 255.255.0.0 format
+					$netmask     = str_replace( '*', '0', $netmask );
+					$netmask_dec = ip2long( $netmask );
+
+					return ( ( ip2long( $ip ) & $netmask_dec ) == ( ip2long( $range ) & $netmask_dec ) );
+				} else {
+					// $netmask is a CIDR size block
+					// fix the range argument
+					$x = explode( '.', $range );
+					while ( count( $x ) < 4 ) {
+						$x[] = '0';
+					}
+					list( $a, $b, $c, $d ) = $x;
+					$range     = sprintf( "%u.%u.%u.%u", empty( $a ) ? '0' : $a, empty( $b ) ? '0' : $b, empty( $c ) ? '0' : $c, empty( $d ) ? '0' : $d );
+					$range_dec = ip2long( $range );
+					$ip_dec    = ip2long( $ip );
+					# Strategy 1 - Create the netmask with 'netmask' 1s and then fill it to 32 with 0s
+					#$netmask_dec = bindec(str_pad('', $netmask, '1') . str_pad('', 32-$netmask, '0'));
+					# Strategy 2 - Use math to create it
+					$wildcard_dec = pow( 2, ( 32 - $netmask ) ) - 1;
+					$netmask_dec  = ~$wildcard_dec;
+
+					return ( ( $ip_dec & $netmask_dec ) == ( $range_dec & $netmask_dec ) );
 				}
 			} else {
-				$low  = ip2long( $range[0] );
-				$high = ip2long( $range[1] );
-				$ip   = ip2long( $ip );
+				// range might be 255.255.*.* or 1.2.3.0-1.2.3.255
+				if ( strpos( $range, '*' ) !== false ) { // a.b.*.* format
+					// Just convert to A-B format by setting * to 0 for A and 255 for B
+					$lower = str_replace( '*', '0', $range );
+					$upper = str_replace( '*', '255', $range );
+					$range = "$lower-$upper";
+				}
+				if ( strpos( $range, '-' ) !== false ) { // A-B format
+					list( $lower, $upper ) = explode( '-', $range, 2 );
+					$lower_dec = (float) sprintf( "%u", ip2long( $lower ) );
+					$upper_dec = (float) sprintf( "%u", ip2long( $upper ) );
+					$ip_dec    = (float) sprintf( "%u", ip2long( $ip ) );
 
-				if ( $low === false || $high === false || $ip === false ) {
-					continue;
+					return ( ( $ip_dec >= $lower_dec ) && ( $ip_dec <= $upper_dec ) );
 				}
 
-				$low  = (float) sprintf( "%u", $low );
-				$high = (float) sprintf( "%u", $high );
-				$ip   = (float) sprintf( "%u", $ip );
-
-				if ( $ip >= $low && $ip <= $high ) {
+				if ( $range === $ip ) {
 					return true;
 				}
 			}
+
 		}
 
 		return false;
@@ -185,7 +227,7 @@ class WPS_LIMIT_LOGIN {
 	/**
 	 * @param $error
 	 *
-	 * @return IXR_Error
+	 * @return \IXR_Error
 	 */
 	public function xmlrpc_error_messages( $error ) {
 
@@ -194,7 +236,7 @@ class WPS_LIMIT_LOGIN {
 		}
 
 		if ( ! $this->is_limit_login_ok() ) {
-			return new IXR_Error( 403, $this->error_msg() );
+			return new \IXR_Error( 403, $this->error_msg() );
 		}
 
 		$ip      = $this->get_address();
@@ -218,7 +260,7 @@ class WPS_LIMIT_LOGIN {
 
 		$remaining = max( ( $this->get_option( 'wps_limit_login_allowed_retries' ) - ( $retries[ $ip ] % $this->get_option( 'wps_limit_login_allowed_retries' ) ) ), 0 );
 
-		return new IXR_Error( 403, sprintf( _n( "<strong>%d</strong> attempt remaining.", "<strong>%d</strong> attempts remaining.", $remaining, 'wps-limit-login' ), $remaining ) );
+		return new \IXR_Error( 403, sprintf( _n( "<strong>%d</strong> attempt remaining.", "<strong>%d</strong> attempts remaining.", $remaining, 'wps-limit-login' ), $remaining ) );
 	}
 
 	/**
@@ -270,7 +312,7 @@ class WPS_LIMIT_LOGIN {
 				remove_filter( 'authenticate', 'wp_authenticate_username_password', 20 );
 				remove_filter( 'authenticate', 'wp_authenticate_email_password', 20 );
 
-				$user = new WP_Error();
+				$user = new \WP_Error();
 				$user->add( 'ip_blacklisted', __( '<strong>ERROR</strong>: Too many failed login attempts.', 'wps-limit-login' ) );
 
 			} elseif ( $this->is_ip_whitelisted( $ip ) ) {
@@ -290,10 +332,9 @@ class WPS_LIMIT_LOGIN {
 	/**
 	 * Enqueue css
 	 */
-	public static function admin_enqueue_scripts() {
-		$screen = get_current_screen();
+	public static function admin_enqueue_scripts( $hook ) {
 
-		if ( false === strpos( $screen->id, 'settings_page_wps-limit-login' ) ) {
+		if ( false === strpos( $hook, 'wps-limit-login' ) ) {
 			return;
 		}
 
@@ -399,29 +440,15 @@ class WPS_LIMIT_LOGIN {
 	 * Setup main options
 	 */
 	public function sanitize_options() {
-		$simple_int_options = array(
-			'wps_limit_login_allowed_retries',
-			'wps_limit_login_lockout_duration',
-			'wps_limit_login_allowed_lockouts',
-			'wps_limit_login_long_duration',
-			'wps_limit_login_valid_duration',
-			'wps_limit_login_notify_email_after'
-		);
-		foreach ( $simple_int_options as $option ) {
-			$val = $this->get_option( $option );
-			if ( (int) $val != $val || (int) $val <= 0 ) {
-				$this->update_option( $option, 1 );
-			}
-		}
 		if ( $this->get_option( 'wps_limit_login_notify_email_after' ) > $this->get_option( 'wps_limit_login_allowed_lockouts' ) ) {
 			$this->update_option( 'wps_limit_login_notify_email_after', $this->get_option( 'wps_limit_login_allowed_lockouts' ) );
 		}
 
-		$args         = explode( ',', $this->get_option( 'wps_limit_lockout_notify' ) );
-		$args_allowed = explode( ',', 'email' );
-		$new_args     = array_intersect( $args, $args_allowed );
-
-		$this->update_option( 'wps_limit_lockout_notify', implode( ',', $new_args ) );
+		if ( isset( $_POST['lockout_notify_email'] ) ) {
+			$this->update_option( 'wps_limit_lockout_notify', 'email' );
+		} else {
+			$this->update_option( 'wps_limit_lockout_notify', '' );
+		}
 
 		$ctype = $this->get_option( 'wps_limit_login_client_type' );
 		if ( $ctype != WPS_LIMIT_LOGIN_REMOTE_ADDR && $ctype != 'HTTP_X_FORWARDED_FOR' ) {
@@ -755,7 +782,7 @@ class WPS_LIMIT_LOGIN {
 			return $user;
 		}
 
-		$error = new WP_Error();
+		$error = new \WP_Error();
 
 		global $wps_limit_login_my_error_shown;
 		$wps_limit_login_my_error_shown = true;
@@ -988,11 +1015,7 @@ class WPS_LIMIT_LOGIN {
 	 */
 	public function get_address( $type_name = '' ) {
 
-		if ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			return $_SERVER['HTTP_X_FORWARDED_FOR'];
-		} elseif ( ! empty( $_SERVER['HTTP_X_SUCURI_CLIENTIP'] ) ) {
-			return $_SERVER['HTTP_X_SUCURI_CLIENTIP'];
-		} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
+		if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
 			return $_SERVER['REMOTE_ADDR'];
 		}
 
@@ -1056,6 +1079,7 @@ class WPS_LIMIT_LOGIN {
 
 		if ( ! empty( $_POST ) ) {
 			check_admin_referer( 'wps-limit-login-settings' );
+
 			if ( false === strpos( $_POST['_wp_http_referer'], 'tab=whitelist' ) && false === strpos( $_POST['_wp_http_referer'], 'tab=blacklist' ) ) {
 
 				if ( is_network_admin() ) {
@@ -1096,18 +1120,24 @@ class WPS_LIMIT_LOGIN {
 
 				/* Should we update options? */
 				if ( isset( $_POST['update_options'] ) ) {
-					$this->update_option( 'wps_limit_login_allowed_retries', (int) $_POST['allowed_retries'] );
-					$this->update_option( 'wps_limit_login_lockout_duration', (int) $_POST['lockout_duration'] * 60 );
-					$this->update_option( 'wps_limit_login_allowed_lockouts', (int) $_POST['allowed_lockouts'] );
-					$this->update_option( 'wps_limit_login_long_duration', (int) $_POST['long_duration'] * 3600 );
-					$this->update_option( 'wps_limit_login_valid_duration', (int) $_POST['valid_duration'] * 3600 );
-					$this->update_option( 'wps_limit_login_notify_email_after', (int) $_POST['email_after'] );
-
-					$notify_methods = array();
-					if ( isset( $_POST['lockout_notify_email'] ) ) {
-						$notify_methods[] = 'email';
+					if ( isset ( $_POST['allowed_retries'] ) ) {
+						$this->update_option( 'wps_limit_login_allowed_retries', (int) $_POST['allowed_retries'] );
 					}
-					$this->update_option( 'wps_limit_lockout_notify', implode( ',', $notify_methods ) );
+					if ( isset ( $_POST['lockout_duration'] ) ) {
+						$this->update_option( 'wps_limit_login_lockout_duration', (int) $_POST['lockout_duration'] * 60 );
+					}
+					if ( isset ( $_POST['allowed_lockouts'] ) ) {
+						$this->update_option( 'wps_limit_login_allowed_lockouts', (int) $_POST['allowed_lockouts'] );
+					}
+					if ( isset ( $_POST['long_duration'] ) ) {
+						$this->update_option( 'wps_limit_login_long_duration', (int) $_POST['long_duration'] * 3600 );
+					}
+					if ( isset ( $_POST['valid_duration'] ) ) {
+						$this->update_option( 'wps_limit_login_valid_duration', (int) $_POST['valid_duration'] * 3600 );
+					}
+					if ( isset ( $_POST['notify_email_after'] ) ) {
+						$this->update_option( 'wps_limit_login_notify_email_after', (int) $_POST['notify_email_after'] );
+					}
 
 					$wps_limit_login_show_credit_link = ( ! empty( $_POST['show_credit_link'] ) ) ? $_POST['show_credit_link'] : '';
 					$this->update_option( 'wps_limit_login_show_credit_link', $wps_limit_login_show_credit_link );
@@ -1160,7 +1190,7 @@ class WPS_LIMIT_LOGIN {
 
 	public function ajax_unlock() {
 		check_ajax_referer( 'wps-limit-login-unlock', 'nonce' );
-		$ip = (string) @$_POST['ip'];
+		$ip = ( isset( $_POST['ip'] ) ) ? $_POST['ip'] : '';
 
 		$lockouts = (array) $this->get_option( 'wps_limit_login_lockouts' );
 
@@ -1170,10 +1200,10 @@ class WPS_LIMIT_LOGIN {
 		}
 
 		//save to log
-		$user_login = @(string) $_POST['username'];
+		$user_login = ( isset( $_POST['username'] ) ) ? $_POST['username'] : '';
 		$log        = $this->get_option( 'wps_limit_login_logged' );
 
-		if ( @$log[ $ip ][ $user_login ] ) {
+		if ( isset( $log[ $ip ][ $user_login ] ) ) {
 			if ( ! is_array( $log[ $ip ][ $user_login ] ) ) {
 				$log[ $ip ][ $user_login ] = array(
 					'counter' => $log[ $ip ][ $user_login ],
@@ -1184,9 +1214,7 @@ class WPS_LIMIT_LOGIN {
 			$this->update_option( 'wps_limit_login_logged', $log );
 		}
 
-		header( 'Content-Type: application/json' );
-		echo 'true';
-		exit;
+		wp_send_json_success();
 	}
 
 	/**
@@ -1250,16 +1278,6 @@ class WPS_LIMIT_LOGIN {
 		echo '<p class="wps-limit-login-credits"><img src="' . WPS_LIMIT_LOGIN_URL . 'assets/img/logo-icon-32.png' . '" /><br />' . __( 'Login form protected by', 'wps-limit-login' ) . ' <br /><a href="https://wordpress.org/plugins/wps-limit-login/" target="_blank">WPS Limit Login</a></p>';
 	}
 
-	public static function is_plugin_installed( $plugin ) {
-		if ( ! function_exists( 'get_plugins' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-
-		$installed_plugins = get_plugins();
-
-		return isset( $installed_plugins[ $plugin ] );
-	}
-
 	public function login_enqueue_scripts() { ?>
         <style type="text/css">
             .login #login_error {
@@ -1272,7 +1290,7 @@ class WPS_LIMIT_LOGIN {
 
             .wps-limit-login-credits {
                 text-align: center;
-                position: absolute;
+                position: fixed;
                 bottom: 0;
                 background: #303f4c;
                 color: #fff;
@@ -1363,30 +1381,6 @@ class WPS_LIMIT_LOGIN {
 	}
 
 	/**
-	 *
-	 * Return PF current user
-	 *
-	 * @return null|string|string[]
-	 */
-	public static function wps_ip_check_return_pf() {
-		$pf        = '';
-		$host_name = gethostname();
-		if ( strpos( $host_name, 'wps' ) !== false ) {
-
-			if ( 'wpserveur-pri' === $host_name ) {
-				$pf = 'pf1';
-
-				return $pf;
-			}
-
-			$pf = preg_replace( "/[^0-9]/", '', $host_name );
-			$pf = 'pf' . $pf;
-		}
-
-		return $pf;
-	}
-
-	/**
 	 * @param $links
 	 *
 	 * @return mixed
@@ -1403,25 +1397,26 @@ class WPS_LIMIT_LOGIN {
 
 	public function dashboard_widget_function( $post, $callback_args ) {
 		$log = $this->get_option( 'wps_limit_login_logged' );
-		$log = WPS_LIMIT_LOGIN::sorted_log_by_date( $log );
+		$log = Plugin::sorted_log_by_date( $log );
 
 		if ( ! is_array( $log ) || empty( $log ) ) {
 			_e( 'No lockouts yet', 'wps-limit-login' );
+
 			return false;
 		}
 
-		_e('List of the last 5 lockouts:', 'wps-limit-login' );
+		_e( 'List of the last 5 lockouts:', 'wps-limit-login' );
 
 		ob_start();
 
-        $i = 0;
-        foreach ( $log as $date => $user_info ) :
-            if ( $i > 5 ) {
-                break;
-            }
-	        echo '<p>' . date_i18n( 'd/m/Y H:i:s', $date ) . ' - ' . $user_info['ip'] . ' - ' . $user_info['username'] . ' (' . $user_info['counter'] . ' ' . _n( 'lockout', 'lockouts', $user_info['counter'], 'wps-limit-login' ) . ')' . '</p>';
-            $i++;
-        endforeach; ?>
+		$i = 0;
+		foreach ( $log as $date => $user_info ) :
+			if ( $i > 5 ) {
+				break;
+			}
+			echo '<p>' . date_i18n( 'd/m/Y H:i:s', $date ) . ' - ' . esc_html( $user_info['ip'] ) . ' - ' . $user_info['username'] . ' (' . $user_info['counter'] . ' ' . _n( 'lockout', 'lockouts', $user_info['counter'], 'wps-limit-login' ) . ')' . '</p>';
+			$i ++;
+		endforeach; ?>
 
 		<?php
 		echo ob_get_clean();
@@ -1437,4 +1432,68 @@ class WPS_LIMIT_LOGIN {
 		) );
 	}
 
+	public static function admin_footer() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		$current_screen = get_current_screen();
+
+		if ( false === strpos( $current_screen->base, 'wps-limit' ) ) {
+			return false;
+		}
+
+		echo "<script>
+            jQuery( 'a.wc-rating-link' ).click( function() {
+                jQuery.post( '" . admin_url( 'admin-ajax.php', 'relative' ) . "', { action: 'wpslimitlogin_rated', _ajax_nonce: jQuery( this ).data('nonce') } );
+                jQuery( this ).parent().text( jQuery( this ).data( 'rated' ) );
+            });</script>";
+	}
+
+	public static function admin_footer_text( $footer_text ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return $footer_text;
+		}
+
+		$current_screen = get_current_screen();
+
+		if ( false === strpos( $current_screen->base, 'wps-limit' ) ) {
+			return $footer_text;
+		}
+
+		if ( ! get_option( 'wpslimitlogin_admin_footer_text_rated' ) ) {
+			$footer_text = sprintf(
+				__( 'If you like %1$s please leave us a %2$s rating. A huge thanks in advance!', 'wps-limit-login' ),
+				sprintf( '<strong>%s</strong>', esc_html__( 'WPS Limit Login', 'wps-limit-login' ) ),
+				'<a href="https://wordpress.org/support/plugin/wps-limit-login/reviews?rate=5#new-post" target="_blank" class="wc-rating-link" data-nonce="' . wp_create_nonce( 'wpslimitloginrated' ) . '" data-rated="' . esc_attr__( 'Thanks :)', 'wps-limit-login' ) . '">&#9733;&#9733;&#9733;&#9733;&#9733;</a>'
+			);
+		}
+
+		return $footer_text;
+	}
+
+	/**
+	 * Triggered when clicking the rating footer.
+	 */
+	public static function wpslimitlogin_rated() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( - 1 );
+		}
+
+		check_ajax_referer( 'wpslimitloginrated' );
+
+		update_option( 'wpslimitlogin_admin_footer_text_rated', 1 );
+		wp_die();
+	}
+
+	/**
+	 * @param $array
+	 *
+	 * @return array
+	 */
+	public static function wps_bidouille_not_display_pub_array( $array ) {
+		$array[] = 'settings_page_wps-limit-login';
+
+		return $array;
+	}
 }

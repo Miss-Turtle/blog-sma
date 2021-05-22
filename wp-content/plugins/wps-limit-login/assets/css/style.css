@@ -21,22 +21,33 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
 */
 /*hack clearfix*/
 .clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
 }
-.clearfix { display: inline-block; }
+
+.clearfix {
+    display: inline-block;
+}
+
 /* start commented backslash hack \*/
-* html .clearfix { height: 1%; }
-.clearfix { display: block; }
+* html .clearfix {
+    height: 1%;
+}
+
+.clearfix {
+    display: block;
+}
+
 /* close commented backslash hack */
 .wps-limit-login-page-settings .h2 {
-    font-size:1.3em;
-    font-weight:600;
+    font-size: 1.3em;
+    font-weight: 600;
 }
+
 .wps-limit-login-page-settings .wps-nav-menu a,
 .wps-limit-login-page-settings .wps-tab td.wps_unlock a,
 .wps-limit-login-page-settings .btn-wps {
@@ -59,12 +70,13 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
 
 .wps-limit-login-page-settings .wps-title {
     text-align: center;
-    background:#33414e;
+    background: #33414e;
     background-size: cover;
-    border-radius:40px 0 0 0;
-    position:relative;
-    margin-bottom:10px;
+    border-radius: 40px 0 0 0;
+    position: relative;
+    margin-bottom: 10px;
 }
+
 .wps-limit-login-page-settings .field-col {
     display: inline-block;
     margin-right: 20px;
@@ -74,16 +86,20 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
     background-color: #fff;
     border: 1px solid #d6d6d6;
 }
+
 .wps-limit-login-page-settings .wps-limit-login-log table tr {
     border-bottom: 1px solid #d6d6d6;
 }
-.wps-limit-login-page-settings .wps-limit-login-log table th{
+
+.wps-limit-login-page-settings .wps-limit-login-log table th {
     padding: 10px;
     border-right: 1px solid #d6d6d6;
-} 
+}
+
 .wps-limit-login-page-settings .wps-limit-login-log table td {
     border-right: 1px solid #d6d6d6;
 }
+
 .wps-limit-login-page-settings .wps-limit-login-log table tr:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.09);
 }
@@ -94,13 +110,15 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
     width: -moz-calc(100% - 320px);
     width: -webkit-calc(100% - 320px);
 }
+
 .wps-limit-login-page-settings .wps-autopromo {
     width: 320px;
     float: right;
     display: block;
-    padding:0 0 0 20px;
+    padding: 0 0 0 20px;
     box-sizing: border-box;
 }
+
 .wps-limit-login-page-settings .wps-content-tab {
     background: #fff;
     border: 1px solid #33414e;
@@ -109,6 +127,7 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
     width: -moz-calc(100% - 20px);
     width: -webkit-calc(100% - 20px);
 }
+
 .wps-limit-login-page-settings .wps-nav-menu a {
     width: 25%;
     float: left;
@@ -125,33 +144,41 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .wps-limit-login-page-settings .wps-nav-menu:first-child a {
     border-left: 0px;
 }
+
 .wps-limit-login-page-settings .wps-nav-menu.last-child a {
     border-right: 0px;
 }
-.wps-limit-login-page-settings .wps-nav-menu.current a{
+
+.wps-limit-login-page-settings .wps-nav-menu.current a {
     background: #fff;
     color: #33414e;
 }
+
 .wps-limit-login-page-settings .wps-nav-menu a:focus,
 .wps-limit-login-page-settings .wps-nav-menu a:hover {
     background: #1d2933;
     color: #fff;
-    box-shadow:none !important;
+    box-shadow: none !important;
 }
+
 .wps-limit-login-page-settings .wps-tab {
     padding: 10px;
 }
+
 .wps-limit-login-page-settings .wps-tab input[type="number"] {
     max-width: 50px;
 }
+
 .wps-limit-login-page-settings .wps-tab textarea {
     width: 100%;
     margin-bottom: 10px;
 }
-.wps-limit-login-page-settings .wps-tab td.wps_unlock, 
+
+.wps-limit-login-page-settings .wps-tab td.wps_unlock,
 .wps-limit-login-page-settings .wps-tab td.wps_unlocked {
     text-align: center;
     vertical-align: middle;
@@ -160,7 +187,7 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
 
 .wps-limit-login-page-settings .wps-tab td.wps_unlock a {
     background: #dc3232;
-    color:#fff;
+    color: #fff;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -168,21 +195,23 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
     left: 0;
     padding: 15px 10px;
     box-sizing: border-box;
-    border-radius:0 !important;
-    box-shadow:none !important;
-    line-height:1 !important;
-    border:0px;
-    margin:0;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    line-height: 1 !important;
+    border: 0px;
+    margin: 0;
 }
+
 .wps-limit-login-page-settings .wps-tab td.wps_unlock a:focus,
 .wps-limit-login-page-settings .wps-tab td.wps_unlock a:hover {
     background: #bb2b2b;
-    color:#fff;
-    box-shadow:none !important;
+    color: #fff;
+    box-shadow: none !important;
 }
+
 .wps-limit-login-page-settings .wps-tab td.wps_unlocked span {
     background: #2dbb45;
-    color:#fff;
+    color: #fff;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -191,23 +220,28 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
     padding: 15px 10px;
     box-sizing: border-box;
 }
+
 .wps-limit-login-page-settings .wps-credit {
     margin: 35px 0px 25px;
 }
+
 .wps-limit-login-page-settings .wps-limit-login-log .display-mobile {
-    display:none;
+    display: none;
 }
+
 .wps-limit-login-page-settings .wps-tab p.submit {
     margin: 0;
     padding: 0px;
 }
+
 .wps-limit-login-page-settings span.wps-ip {
     background: #33414e;
     color: #fff;
     padding: 3px 8px;
     border-radius: 4px;
-    font-size:1.1em;
+    font-size: 1.1em;
 }
+
 /*
  *UI
  */
@@ -226,82 +260,117 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
     outline: none;
     text-shadow: none !important;
 }
+
 .wps-limit-login-page-settings .btn-wps.wps-save {
     background: #33414e !important;
     color: #fff !important;
     border: 1px solid #222b33;
-    }
-    .wps-limit-login-page-settings .btn-wps.wps-save:focus,
-    .wps-limit-login-page-settings .btn-wps.wps-save:hover {
-        color: #33414e !important;
-        background: #fff !important;
-    }
+}
+
+.wps-limit-login-page-settings .btn-wps.wps-save:focus,
+.wps-limit-login-page-settings .btn-wps.wps-save:hover {
+    color: #33414e !important;
+    background: #fff !important;
+}
+
+.wps-limit-login-page-settings .btn-wps.wps-addip {
+    background: #00a0d2 !important;
+    color: #fff !important;
+    border: 1px solid #222b33;
+}
+
+.wps-limit-login-page-settings .btn-wps.wps-addip:focus,
+.wps-limit-login-page-settings .btn-wps.wps-addip:hover {
+    color: #33414e !important;
+    background: #fff !important;
+}
+
 .wps-limit-login-page-settings .btn-wps.wps-reinit {
     background: #00a0d2 !important;
     color: #fff !important;
     border: 1px solid #176a8c;
-    }
-    .wps-limit-login-page-settings .btn-wps.wps-reinit:focus,
-    .wps-limit-login-page-settings .btn-wps.wps-reinit:hover {
-        color: #00a0d2 !important;
-        background: #fff !important;
-    }
+}
+
+.wps-limit-login-page-settings .btn-wps.wps-reinit:focus,
+.wps-limit-login-page-settings .btn-wps.wps-reinit:hover {
+    color: #00a0d2 !important;
+    background: #fff !important;
+}
+
 .wps-limit-login-page-settings .btn-wps.wps-reset-lockouts {
     background: #2dbb45 !important;
     color: #fff !important;
     border: 1px solid #039436;
-    }
-    .wps-limit-login-page-settings .btn-wps.wps-reset-lockouts:focus,
-    .wps-limit-login-page-settings .btn-wps.wps-reset-lockouts:hover {
-        color: #2dbb45 !important;
-        background: #fff !important;
-    }
+}
+
+.wps-limit-login-page-settings .btn-wps.wps-reset-lockouts:focus,
+.wps-limit-login-page-settings .btn-wps.wps-reset-lockouts:hover {
+    color: #2dbb45 !important;
+    background: #fff !important;
+}
+
 .wps-limit-login-page-settings .btn-wps.wps-clear {
     background: #dc3232 !important;
     color: #fff !important;
     border: 1px solid #a72525;
-    }
-    .wps-limit-login-page-settings .btn-wps.wps-clear:focus,
-    .wps-limit-login-page-settings .btn-wps.wps-clear:hover {
-        color: #dc3232 !important;
-        background: #fff !important;
-    }
+}
+
+.wps-limit-login-page-settings .btn-wps.wps-clear:focus,
+.wps-limit-login-page-settings .btn-wps.wps-clear:hover {
+    color: #dc3232 !important;
+    background: #fff !important;
+}
+
 .wps-limit-login-page-settings .btn-wps:before {
     content: '';
     font-family: Font Awesome\ 5 Pro;
     position: absolute;
     left: 10px;
     font-size: 20px;
-    font-weight:300;
+    font-weight: 300;
 }
+
+.wps-limit-login-page-settings .btn-wps.wps-addip:before {
+    content: '\f067';
+}
+
 .wps-limit-login-page-settings .btn-wps.wps-save:before {
     content: '\f0c7';
 }
+
 .wps-limit-login-page-settings .btn-wps.wps-reinit:before {
     content: '\f2f1';
 }
+
 .wps-limit-login-page-settings .btn-wps.wps-reset-lockouts:before {
     content: '\f13e';
 }
+
 .wps-limit-login-page-settings .btn-wps.wps-clear:before {
     content: '\f2ed';
 }
+
 .wps-limit-login-page-settings textarea[name="wps_limit_login_blacklist_ips"] {
     background: #292929;
     color: #d0d0d0;
 }
+
 .wps-limit-login-page-settings textarea[name="wps_limit_login_blacklist_ips"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color:#9a9a9a;
+    color: #9a9a9a;
 }
+
 .wps-limit-login-page-settings textarea[name="wps_limit_login_blacklist_ips"]::-moz-placeholder { /* Firefox 19+ */
-  color:#9a9a9a;
+    color: #9a9a9a;
 }
+
 .wps-limit-login-page-settings textarea[name="wps_limit_login_blacklist_ips"]:-ms-input-placeholder { /* IE 10+ */
-  color:#9a9a9a;
+    color: #9a9a9a;
 }
+
 .wps-limit-login-page-settings textarea[name="wps_limit_login_blacklist_ips"]:-moz-placeholder { /* Firefox 18- */
-  color:#9a9a9a;
+    color: #9a9a9a;
 }
+
 /*pub WPServeur*/
 .wps-autopromo .pub-wp-serveur {
     background: #33414E !important;
@@ -312,56 +381,64 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
     box-shadow: none;
     color: #FFF !important;
     margin: 0 0 45px 0 !important;
-    box-sizing:border-box;
-    border-radius:5px;
+    box-sizing: border-box;
+    border-radius: 5px;
 }
+
 .wps-autopromo .pub-wp-serveur:first-child {
-    margin-top:40px !important;
+    margin-top: 40px !important;
 }
+
 .wps-autopromo .pub-wp-serveur.plugin-card-migrate-guru {
-    margin-top:0px !important;
+    margin-top: 0px !important;
 }
+
 .wps-autopromo .pub-wp-serveur:last-child {
-    margin-bottom:0px !important;
+    margin-bottom: 0px !important;
 }
+
 .wps-autopromo .pub-wp-serveur .logo {
     padding: 0px 20px;
-    text-align:center;
-    margin-bottom:5px;
+    text-align: center;
+    margin-bottom: 5px;
 }
+
 .wps-autopromo .pub-wp-serveur > .wps-pub-logo {
     margin-top: -45px;
     text-align: center;
-    position:relative;
+    position: relative;
 }
+
 .wps-autopromo .pub-wp-serveur > .wps-pub-logo img {
-    border-radius:100%;
+    border-radius: 100%;
 }
+
 .wps-autopromo .pub-wp-serveur > .wps-pub-logo:before {
     content: '';
     display: block;
     width: 64px;
     height: 64px;
     border: 3px solid rgba(255, 255, 255, 0.27);
-    box-shadow:0px 0px 0px 5px #f2f2f2;
+    box-shadow: 0px 0px 0px 5px #f2f2f2;
     position: absolute;
     border-radius: 100%;
     margin: 0 auto;
     left: 0;
     right: 0;
-    top:0;
+    top: 0;
     box-sizing: border-box;
 }
+
 .admin-color-light .wps-autopromo .pub-wp-serveur > .wps-pub-logo:before {
-    box-shadow:0px 0px 0px 5px #f5f5f5;
+    box-shadow: 0px 0px 0px 5px #f5f5f5;
 }
 
 .wps-autopromo .pub-wp-serveur > .message {
     width: 100%;
     padding: 0px;
     font-size: 14px;
-    box-sizing:border-box;
-    margin-bottom:15px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
 }
 
 .wps-autopromo .pub-wp-serveur .cta {
@@ -463,106 +540,125 @@ FontAwesome  font-family:Font Awesome\ 5 Pro;
         margin-bottom: 20px;
     }
 }
+
 /*pub hébergement*/
 /*
  *responsive
  */
 @media screen and (max-width: 1300px) {
     .wps-limit-login-page-settings .wps-autopromo {
-        padding:0 0 0 0;
+        padding: 0 0 0 0;
     }
+
     .wps-limit-login-page-settings .wps-content-limit-login,
     .wps-limit-login-page-settings .wps-autopromo,
     .wps-limit-login-page-settings .wps-content-tab {
-        float:none;
-        width:100%;
+        float: none;
+        width: 100%;
     }
+
     .wps-limit-login-page-settings .wps-autopromo {
-        display:table;
+        display: table;
     }
+
     .wps-limit-login-page-settings .wps-content-limit-login {
-        margin-bottom:45px;
+        margin-bottom: 45px;
     }
+
     .wps-autopromo .pub-wp-serveur {
-        width:calc(50% - 5px);
-        width:-moz-calc(50% - 5px);
-        width:-webkit-calc(50% - 5px);
-        float:left;
+        width: calc(50% - 5px);
+        width: -moz-calc(50% - 5px);
+        width: -webkit-calc(50% - 5px);
+        float: left;
     }
+
     .wps-autopromo .pub-wp-serveur:first-child {
-        margin-right:10px !important;
-        margin-bottom:45px !important;
-        margin-top:0px !important;
+        margin-right: 10px !important;
+        margin-bottom: 45px !important;
+        margin-top: 0px !important;
     }
 }
+
 @media screen and (max-width: 1000px) {
     .wps-autopromo .pub-wp-serveur {
-        width:100%;
-        float:none;
+        width: 100%;
+        float: none;
     }
+
     .wps-autopromo .pub-wp-serveur:first-child {
-        margin-right:0px !important;
-        margin-bottom:45px !important;
+        margin-right: 0px !important;
+        margin-bottom: 45px !important;
     }
 }
+
 @media screen and (max-width: 960px) {
     .wps-limit-login-page-settings span.wps-ip {
-        display:block;
+        display: block;
     }
 }
-@media screen and (max-width:830px) {
+
+@media screen and (max-width: 830px) {
     .wps-limit-login-page-settings .wps-nav-menu a {
         width: 50%;
     }
+
     .wps-limit-login-page-settings .wps-nav-menu:nth-child(3) a,
     .wps-limit-login-page-settings .wps-nav-menu:nth-child(4) a {
-        border-top:1px solid rgba(255, 255, 255, 0.3);
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
     }
 }
+
 @media screen and (max-width: 782px) {
-    .wps-limit-login-page-settings .wps-tab td.wps_unlock, 
+    .wps-limit-login-page-settings .wps-tab td.wps_unlock,
     .wps-limit-login-page-settings .wps-tab td.wps_unlocked {
-        padding:0px !important;
+        padding: 0px !important;
     }
-    .wps-limit-login-page-settings .wps-tab td.wps_unlock a, 
+
+    .wps-limit-login-page-settings .wps-tab td.wps_unlock a,
     .wps-limit-login-page-settings .wps-tab td.wps_unlocked span {
-        position:relative;
-        display:block;
+        position: relative;
+        display: block;
     }
+
     .wps-limit-login-page-settings .wps-limit-login-log .hide-mobile {
-         display:none;   
+        display: none;
     }
+
     .wps-limit-login-page-settings .wps-limit-login-log .display-mobile {
-        display:block;
-        width:90px;
-        float:left;
-        font-weight:600;
-        text-align:right;
-        margin-right:5px;
+        display: block;
+        width: 90px;
+        float: left;
+        font-weight: 600;
+        text-align: right;
+        margin-right: 5px;
     }
+
     .wps-limit-login-page-settings .wps-limit-login-log table td {
-        padding:10px 5px;
-        border-bottom:1px solid #d6d6d6;
-        border-right:0px;
+        padding: 10px 5px;
+        border-bottom: 1px solid #d6d6d6;
+        border-right: 0px;
     }
 }
 
 @media screen and (max-width: 690px) {
     .wps-title .wps-logo-img img {
-        height:auto;
-        width:90%;
+        height: auto;
+        width: 90%;
     }
 }
+
 @media screen and (max-width: 460px) {
     .wps-limit-login-page-settings .wps-nav-menu a {
         width: 100%;
-        border-right:0px !important;
-        border-left:0px !important;
+        border-right: 0px !important;
+        border-left: 0px !important;
     }
+
     .wps-limit-login-page-settings .wps-nav-menu a {
-        border-top:1px solid rgba(255, 255, 255, 0.3);
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
     }
+
     .wps-limit-login-page-settings .wps-nav-menu:first-child a {
-        border-top:0px !important;
+        border-top: 0px !important;
     }
 }

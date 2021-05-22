@@ -19,7 +19,7 @@
 
 // ** Get the server connexions if local or not */
 require_once(ABSPATH . 'info.php');
-if($_SERVER["SERVER_ADDR"] == "127.0.0.1"){
+if($_SERVER["SERVER_ADDR"] == "::1" || $_SERVER["SERVER_ADDR"] == "127.0.0.1"){
   // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
   /** Nom de la base de données de WordPress. */
   define('DB_NAME', 'sandrine_martinez_10');

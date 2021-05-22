@@ -2,11 +2,16 @@
 /*
 Plugin Name: WPS Limit Login
 Description: Limit connection attempts by IP address
-Version: 1.2
-Author: WPServeur, NicolasKulka, benoitgeek
-Text Domain: wps-limit-login
+Donate link: https://www.paypal.me/donateWPServeur
+Author: WPServeur, NicolasKulka, wpformation
 Author URI: https://wpserveur.net
-License: GPL2
+Version: 1.5.3
+Requires at least: 4.2
+Tested up to: 5.7
+Domain Path: languages
+Text Domain: wps-limit-login
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 // don't load directly
@@ -15,9 +20,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants
-define( 'WPS_LIMIT_LOGIN_VERSION', '1.2' );
+define( 'WPS_LIMIT_LOGIN_VERSION', '1.5.3' );
 define( 'WPS_LIMIT_LOGIN_FOLDER', 'wps-limit-login' );
 define( 'WPS_LIMIT_LOGIN_BASENAME', plugin_basename( __FILE__ ) );
+if ( ! defined( 'WPS_PUB_API_URL' ) ) {
+	define( 'WPS_PUB_API_URL', 'https://www.wpserveur.net/wp-json/' );
+}
 
 define( 'WPS_LIMIT_LOGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'WPS_LIMIT_LOGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -28,28 +36,14 @@ $wps_limit_login_my_error_shown       = false;
 $wps_limit_login_just_lockedout       = false;
 $wps_limit_login_notempty_credentials = false;
 
-// Function for easy load files
-if ( ! function_exists( 'wpserveur_limit_login_load_files' ) ) {
-	function wpserveur_limit_login_load_files( $dir, $files, $prefix = '' ) {
-		foreach ( $files as $file ) {
-			if ( is_file( $dir . $prefix . $file . '.php' ) ) {
-				require_once( $dir . $prefix . $file . '.php' );
-			}
-		}
-	}
-}
+require_once WPS_LIMIT_LOGIN_DIR . 'autoload.php';
 
-// Plugin client classes
-wpserveur_limit_login_load_files( WPS_LIMIT_LOGIN_DIR . 'classes/', array(
-	'plugin',
-) );
-
-// register_activation_hook( __FILE__, array( 'WPS_LIMIT_LOGIN', 'activate' ) );
+// register_activation_hook( __FILE__, array( '\WPS\WPS_Limit_Login\Plugin', 'activate' ) );
 
 if ( ! function_exists( 'plugins_loaded_wps_limit_login_plugin' ) ) {
 	add_action( 'plugins_loaded', 'plugins_loaded_wps_limit_login_plugin' );
 	function plugins_loaded_wps_limit_login_plugin() {
-		new WPS_LIMIT_LOGIN();
+		\WPS\WPS_Limit_Login\Plugin::get_instance();
 
 		load_plugin_textdomain( 'wps-limit-login', false, basename( rtrim( dirname( __FILE__ ), '/' ) ) . '/languages' );
 	}

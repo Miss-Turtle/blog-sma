@@ -1,3 +1,7 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+} ?>
 <div class="wps-wrap-menu">
 	<nav class="wps-menu">
 		<div class="wps-nav-menu <?php echo ( $_GET[ 'page' ] === 'wps-limit-login' && ! isset( $_GET[ 'tab' ] ) ) ? 'current' : ''; ?>">

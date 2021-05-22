@@ -1,3 +1,7 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+} ?>
 <h1 class="wps-title">
 	<div class="wps-logo-img">
 		<a href="https://www.wpserveur.net/?refwps=14&campaign=wpslimitlogin" target="_blank">

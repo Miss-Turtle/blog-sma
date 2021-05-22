@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
+
 $wps_limit_lockout_notify = explode( ',', $this->get_option( 'wps_limit_lockout_notify' ) );
 $email_checked            = in_array( 'email', $wps_limit_lockout_notify ) ? ' checked ' : '';
 
@@ -59,7 +64,7 @@ if ( 'true' == $wps_limit_login_show_credit_link || '1' == $wps_limit_login_show
 	       value="email"/> <label
 		for="lockout_notify_email"><?php _e( 'Email to admin after', 'wps-limit-login' ); ?></label>
 	    <input type="number" value="<?php echo( $this->get_option( 'wps_limit_login_notify_email_after' ) ); ?>"
-	       name="email_after"/> <?php _e( 'lockouts', 'wps-limit-login' ); ?>
+	       name="notify_email_after"/> <?php _e( 'lockouts', 'wps-limit-login' ); ?>
     </p>
     <div class="wps-credit">
         <div class="h2"><?php _e( 'Show Credit Link?', 'wps-limit-login' ); ?></div>

@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
+
 $wps_limit_login_black_list_ips = $this->get_option( 'wps_limit_login_blacklist' );
 $wps_limit_login_black_list_ips = ( is_array( $wps_limit_login_black_list_ips ) && ! empty( $wps_limit_login_black_list_ips ) ) ? implode( "\n", $wps_limit_login_black_list_ips ) : ''; ?>
 <form action="<?php echo $this->get_wps_limit_login_options_page_uri() . '&tab=blacklist'; ?>" method="post">
